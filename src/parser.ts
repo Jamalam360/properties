@@ -49,7 +49,7 @@ function set(obj: Record<string, unknown>, key: string, value: string) {
     key = key.trim();
     value = value.trimStart().replaceAll("\\\\", "\\");
 
-    if (key.includes(".")) {
+    if (key.includes(".") && !key.includes("\\.")) {
         const keys = key.split(".");
 
         if (keys.length > 1) {
@@ -63,6 +63,6 @@ function set(obj: Record<string, unknown>, key: string, value: string) {
             set(obj[first!] as Record<string, unknown>, rest, value);
         }
     } else {
-        obj[key] = value;
+        obj[key.replaceAll("\\.", ".")] = value;
     }
 }

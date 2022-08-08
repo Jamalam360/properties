@@ -153,6 +153,16 @@ function test(result: Record<string, unknown>) {
     });
 
     Deno.test({
+        name: "period_in_path",
+        fn() {
+            assert(
+                result["period.in.path"] == "value",
+                "Key `period.in.path` should be `value`",
+            );
+        },
+    });
+
+    Deno.test({
         name: "nested",
         fn() {
             assert(
