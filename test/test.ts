@@ -1,5 +1,5 @@
 import { assert } from "https://deno.land/std@v0.150.0/testing/asserts.ts";
-import { parse } from "../mod.ts";
+import { parse, stringify } from "../mod.ts";
 
 function test(result: Record<string, unknown>) {
     Deno.test({
@@ -233,5 +233,9 @@ function arraysEqual(a: unknown[], b: unknown[]) {
 
 const file = await Deno.readTextFile("./test/test.properties");
 const result = parse(file);
-
 test(result);
+
+const stringified = stringify(result);
+const reparsed = parse(stringified);
+
+test(reparsed);

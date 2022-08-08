@@ -1,8 +1,9 @@
 export function stringify(obj: Record<string, unknown>): string {
     let result = "";
 
-    for (const key of Object.keys(obj)) {
+    for (let key of Object.keys(obj)) {
         const value = obj[key];
+        key = key.replaceAll(".", "\\.");
 
         if (typeof value === "object") {
             if (Array.isArray(value)) {
