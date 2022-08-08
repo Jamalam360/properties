@@ -151,6 +151,38 @@ function test(result: Record<string, unknown>) {
             );
         },
     });
+
+    Deno.test({
+        name: "nested",
+        fn() {
+            assert(
+                (result["nested"] as Record<string, unknown>)["key"] == "value",
+                "Key `nested.key` should be `value`",
+            );
+        },
+    });
+
+    Deno.test({
+        name: "nested_ml",
+        fn() {
+            assert(
+                (result["nested"] as Record<string, unknown>)["ml"] == "abcd",
+                "Key `nested.ml` should be `abcd`",
+            );
+        },
+    });
+
+    Deno.test({
+        name: "double_nested",
+        fn() {
+            assert(
+                ((result["nested"] as Record<string, unknown>)[
+                    "nested"
+                ] as Record<string, unknown>)["key"] == "value",
+                "Key `nested.nested.key` should be `value`",
+            );
+        },
+    });
 }
 
 const file = await Deno.readTextFile("./test/test.properties");
