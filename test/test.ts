@@ -163,6 +163,16 @@ function test(result: Record<string, unknown>) {
     });
 
     Deno.test({
+        name: "greetings",
+        fn() {
+            assert(
+                arraysEqual(result["greetings"] as unknown[], ["hello", "hey"]),
+                "Key `greetings` should be `[hello, hey]`",
+            );
+        },
+    });
+
+    Deno.test({
         name: "nested",
         fn() {
             assert(
@@ -193,6 +203,32 @@ function test(result: Record<string, unknown>) {
             );
         },
     });
+
+    Deno.test({
+        name: "nested_array",
+        fn() {
+            assert(
+                arraysEqual(
+                    (result["nested"] as Record<string, unknown>)[
+                        "greetings"
+                    ] as unknown[],
+                    ["hello", "hey"],
+                ),
+                "Key `nested.greetings` should be `[hello, hey]`",
+            );
+        },
+    });
+}
+
+function arraysEqual(a: unknown[], b: unknown[]) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    for (let i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
 }
 
 const file = await Deno.readTextFile("./test/test.properties");

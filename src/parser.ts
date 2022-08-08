@@ -63,6 +63,13 @@ function set(obj: Record<string, unknown>, key: string, value: string) {
             set(obj[first!] as Record<string, unknown>, rest, value);
         }
     } else {
-        obj[key.replaceAll("\\.", ".")] = value;
+        if (value.startsWith("[") && value.endsWith("]")) {
+            obj[key.replaceAll("\\.", ".")] = value.substring(
+                1,
+                value.length - 1,
+            ).split(",").map((v) => v.trim());
+        } else {
+            obj[key.replaceAll("\\.", ".")] = value;
+        }
     }
 }
