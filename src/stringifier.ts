@@ -1,8 +1,21 @@
 interface StringifyOptions {
+    /**
+     * The assignment string. Defaults to " : ".
+     */
     assignment?: string;
+    /**
+     * Whether to add a newline after each key-value pair. Defaults to false.
+     */
     space?: boolean;
 }
 
+/**
+ * Stringifies an object into a properties string.
+ *
+ * @param obj - The object to stringify
+ * @param opts - Options for stringifying the object
+ * @returns A valid properties string representing the object
+ */
 export function stringify(
     obj: Record<string, unknown>,
     opts?: StringifyOptions,
